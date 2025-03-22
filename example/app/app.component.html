@@ -1,0 +1,58 @@
+<div class="app" *ngIf="userService.user() as user; else splash">
+  <mat-toolbar class="app-bar">
+    <button mat-icon-button (click)="sidebar.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <a class="brand">
+      NOTES<small>AI</small>
+    </a>
+    <button mat-button routerLink="/">Create New <mat-icon>add</mat-icon></button>
+    <span [style.flex]="1"></span>
+    <div class="user" *ngIf="userService.user() as user; else signIn">
+      <span>
+        {{user.displayName}}
+      </span>
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="signOut()">Sign Out</button>
+      </mat-menu>
+    </div>
+    <ng-template #signIn>
+      <button mat-flat-button (click)="userService.signIn()">Sign In</button>
+    </ng-template>
+  </mat-toolbar>
+
+  <mat-drawer-container>
+    <mat-drawer mode="side" #sidebar>
+      <mat-action-list>
+        <button mat-list-item *ngFor="let note of noteService.myNotes()" routerLink="/{{note.id}}">
+          <h3 matListItemTitle>{{note.guide ? note.guide.subject : (note.notes | slice: 50)}}</h3>
+          <p matListItemLine>
+            {{note.createdAt.seconds * 1000 | date:'medium'}} - {{note.status}}
+          </p>
+        </button>
+      </mat-action-list>
+    </mat-drawer>
+    <mat-drawer-content>
+      <main>
+        <router-outlet></router-outlet>
+      </main>
+    </mat-drawer-content>
+  </mat-drawer-container>
+</div>
+
+<ng-template #splash>
+  <div class="splash">
+    <div class="sign-in">
+      <h1>NOTES <em>AI</em></h1>
+      <button mat-flat-button (click)="userService.signIn()">Sign In</button>
+    </div>
+    <p class="legal">By signing in and using our app you are agreeing to our <br />
+      <a (click)="terms()">terms of use</a> and <a (click)="privacy()">privacy</a>.</p>
+  </div>
+</ng-template>
+
+
+

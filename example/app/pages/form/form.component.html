@@ -1,0 +1,7 @@
+<textarea  [formControl]="notes" placeholder="Add some notes to get started..."></textarea>
+<mat-toolbar>
+  <button mat-button (click)="reset()">Reset</button>
+  <button mat-button (click)="loadSample()">Load Sample</button>
+  <span [style.flex]="1"></span>
+  <button mat-flat-button (click)="submit()">Create Study Guide</button>
+</mat-toolbar>

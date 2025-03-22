@@ -1,0 +1,48 @@
+<mat-tab-group *ngIf="noteService.active() as note">
+  <mat-tab label="Notes">
+    <div class="alert" *ngIf="! loaded()">
+      <mat-spinner diameter="48"></mat-spinner>
+      <div class="message">
+        <h3>Just a minute...</h3>
+        <p>Our robots are writing your study guide, this may take a couple minutes depending on how hard the subject is!</p>
+      </div>
+    </div>
+    <div class="note" *ngFor="let n of notes()">
+      {{n}}
+    </div>
+  </mat-tab>
+  <mat-tab label="Study Guide" [disabled]="! loaded()">
+    <markdown [data]="note.guide?.studyGuide"></markdown>
+  </mat-tab>
+  <mat-tab label="Quiz" [disabled]="! loaded()">
+    <div class="quiz">
+      <div class="questions">
+        <h1>Quiz</h1>
+        <div class="question" *ngFor="let question of note.guide?.quiz; let idx = index">
+          <p>{{question.question}}</p>
+          <mat-radio-group  class="answers" aria-label="Select an option" (change)="setAnswer(idx, $event)" [disabled]="showAnswers()">
+            <div class="answer" *ngFor="let answer of question.answers">
+              <div class="result">
+                <ng-container  *ngIf="showAnswers()">
+                  <ng-container *ngIf="answers() as answers">
+                    <mat-icon *ngIf="answers[idx] && answers[idx] === answer.text && answer.correct; else incorrect" class="success">checkmark</mat-icon>
+                    <ng-template #incorrect>
+                      <mat-icon *ngIf="answers[idx] && answers[idx] === answer.text" class="danger">close</mat-icon>
+                    </ng-template>
+                  </ng-container>
+                </ng-container>
+              </div>
+              <mat-radio-button [value]="answer.text">{{answer.text}} <span class="helper-text success" *ngIf="showAnswers() && answer.correct">Correct answer</span></mat-radio-button>
+            </div>
+          </mat-radio-group>
+        </div>
+        <div class="score">
+          <button *ngIf="! showAnswers(); else showSummary" mat-flat-button (click)="finishQuiz()" [disabled]="! complete()">Finish Quiz</button>
+          <ng-template #showSummary>
+            <p>You scored {{score() * 10}}%</p>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+</mat-tab-group>
