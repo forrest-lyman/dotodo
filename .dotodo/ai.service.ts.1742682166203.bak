@@ -8,7 +8,7 @@ export interface Message {
   content: string;
 }
 
-// dotodo: 2023-11-04T12:00:00Z load the default config from environment
+// dotodo: 2023-11-02T12:00:00Z load the default config from environment
 export const DEFAULT_CONFIG = {
   model: environment.openAiModel || 'gpt-4o-mini',
   max_tokens: environment.openAiMaxTokens || 4000,

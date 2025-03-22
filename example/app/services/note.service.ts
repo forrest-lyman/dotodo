@@ -6,6 +6,7 @@ import {toObservable, toSignal} from '@angular/core/rxjs-interop';
 import {z} from 'zod';
 import {AiService} from './ai.service';
 
+// todo add payload that can be anything
 export interface Note {
   notes: string;
   uid: string;

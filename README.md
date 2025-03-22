@@ -46,3 +46,10 @@ function sayHi(state: {user: {displayName: string}}) {
   return `Hi ${state.user.displayName}`;
 }
 ```
+
+Local Testing
+-------------
+
+```shell
+npm run cli -- example/**/*.ts
+```
