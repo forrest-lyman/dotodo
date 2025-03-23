@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest --watch",
     "build": "npx tsc --watch",
-    "cli": "node dist/src/index.js"
+    "demo": "node --no-warnings dist/index.js 'src/**/*.ts'"
   },
   "bin": {
     "dotodo": "./dist/index.js"

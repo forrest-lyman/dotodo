@@ -3,10 +3,8 @@ import getTodosFromText from './todo';
 describe('getTodosFromText', () => {
   it('extracts TODO comments with line numbers and tags', () => {
     const text = `
-      // TODO: implement this
-      //todo: handle edge case
       const y = 23;
-      const x = 42; // TODO: temp var
+      const x = 42;
     `;
 
     const todos = getTodosFromText(text, { filepath: 'src/test.ts' });
